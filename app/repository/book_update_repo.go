@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res *pb.OperationResponse, err error) {
@@ -36,13 +37,26 @@ func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res
 
 	helper.NoEmpty(bookPayload, &bookPayload)
 
+	// editor
+	editorPayload := bson.M{}
+	if req.Payload.Editor != nil && len(req.Payload.Editor) > 0 {
+		editor := req.Payload.Editor[0]
+		editorPayload = bson.M{
+			"editor": bson.M{
+				"user_id": editor.UserId,
+				"user":    editor.User,
+			},
+		}
+	}
+
 	payload := bson.D{}
 	payload = append(payload, bookPayload...)
 	payload = append(payload, uploaderPayload...)
 	payload = append(payload, bson.E{Key: "updated_at", Value: helper.GetTime()})
 
-	set := bson.M{"$set": payload}
-	resp, err := b.book.UpdateOne(ctx, filter, set)
+	// set := bson.M{"$set": editorPaylod}
+	opts := options.Update().SetUpsert(false)
+	resp, err := b.book.UpdateOne(ctx, filter, bson.M{"$set": payload, "$addToSet": editorPayload}, opts)
 	if resp.ModifiedCount > 0 {
 		isAffected = true
 	}

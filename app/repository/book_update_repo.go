@@ -42,7 +42,7 @@ func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res
 	if req.Payload.Editor != nil && len(req.Payload.Editor) > 0 {
 		editor := req.Payload.Editor[0]
 		editorPayload = bson.M{
-			"editor": bson.M{
+			"editors": bson.M{
 				"user_id": editor.UserId,
 				"user":    editor.User,
 			},

@@ -20,3 +20,6 @@ delete:
 
 softdelete:
 	grpcurl --plaintext -d '{"book_id": "1667832878734"}' localhost:5014 BookService.SoftDelete
+
+update:
+	grpcurl --plaintext -d '{"book_id": "1667832878734", "payload": {"title": "Lord of The Ring 2", "uploader": {"user": "steven"}}}' localhost:5014 BookService.Update

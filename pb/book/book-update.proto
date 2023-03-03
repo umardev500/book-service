@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option go_package = "pb/book";
+
+import "pb/book/book.proto";
+
+message BookUpdateRequest {
+    string book_id = 1;
+    Book payload = 2; 
+}

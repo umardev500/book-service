@@ -27,6 +27,7 @@ type BookServiceClient interface {
 	GetBooks(ctx context.Context, in *BookFindAllRequest, opts ...grpc.CallOption) (*BookFindAllResponse, error)
 	Delete(ctx context.Context, in *BookDeleteRequest, opts ...grpc.CallOption) (*pb.OperationResponse, error)
 	SoftDelete(ctx context.Context, in *BookDeleteRequest, opts ...grpc.CallOption) (*pb.OperationResponse, error)
+	Update(ctx context.Context, in *BookUpdateRequest, opts ...grpc.CallOption) (*pb.OperationResponse, error)
 }
 
 type bookServiceClient struct {
@@ -73,6 +74,15 @@ func (c *bookServiceClient) SoftDelete(ctx context.Context, in *BookDeleteReques
 	return out, nil
 }
 
+func (c *bookServiceClient) Update(ctx context.Context, in *BookUpdateRequest, opts ...grpc.CallOption) (*pb.OperationResponse, error) {
+	out := new(pb.OperationResponse)
+	err := c.cc.Invoke(ctx, "/BookService/Update", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookServiceServer is the server API for BookService service.
 // All implementations must embed UnimplementedBookServiceServer
 // for forward compatibility
@@ -81,6 +91,7 @@ type BookServiceServer interface {
 	GetBooks(context.Context, *BookFindAllRequest) (*BookFindAllResponse, error)
 	Delete(context.Context, *BookDeleteRequest) (*pb.OperationResponse, error)
 	SoftDelete(context.Context, *BookDeleteRequest) (*pb.OperationResponse, error)
+	Update(context.Context, *BookUpdateRequest) (*pb.OperationResponse, error)
 	mustEmbedUnimplementedBookServiceServer()
 }
 
@@ -99,6 +110,9 @@ func (UnimplementedBookServiceServer) Delete(context.Context, *BookDeleteRequest
 }
 func (UnimplementedBookServiceServer) SoftDelete(context.Context, *BookDeleteRequest) (*pb.OperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SoftDelete not implemented")
+}
+func (UnimplementedBookServiceServer) Update(context.Context, *BookUpdateRequest) (*pb.OperationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedBookServiceServer) mustEmbedUnimplementedBookServiceServer() {}
 
@@ -185,6 +199,24 @@ func _BookService_SoftDelete_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BookUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/BookService/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookServiceServer).Update(ctx, req.(*BookUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookService_ServiceDesc is the grpc.ServiceDesc for BookService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -207,6 +239,10 @@ var BookService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SoftDelete",
 			Handler:    _BookService_SoftDelete_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _BookService_Update_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

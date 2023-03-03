@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option go_package = "pb/book";
+
+message BookEditor {
+    string user_id = 1;
+    string user = 2;
+}

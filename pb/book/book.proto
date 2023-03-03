@@ -3,6 +3,7 @@ syntax = "proto3";
 option go_package = "pb/book";
 
 import "pb/book/book-uploader.proto";
+import "pb/book/book-editor.proto";
 
 message Book {
     string book_id = 1;
@@ -15,7 +16,8 @@ message Book {
     string description = 8;
     string location_id = 9;
     BookUploader uploader = 10;
-    int64 created_at = 11;
-    int64 updated_at = 12;
-    int64 deleted_at = 13;
+    repeated BookEditor editor = 11;
+    int64 created_at = 12;
+    int64 updated_at = 13;
+    int64 deleted_at = 14;
 }

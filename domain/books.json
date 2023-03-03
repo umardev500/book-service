@@ -13,8 +13,12 @@
       "user_id": "721872389233",
       "user": "seteven"
     },
-    "created_at": 1677761478,
-    "updated_at": null,
-    "deleted_at": null
+    "editor": [
+      {
+        "user_id": "721872389238",
+        "user": "mark"
+      }
+    ],
+    "created_at": 1677761478
   }
 ]

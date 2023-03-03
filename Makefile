@@ -23,7 +23,7 @@ softdelete:
 	grpcurl --plaintext -d '{"book_id": "1667832878734"}' localhost:5014 BookService.SoftDelete
 
 update:
-	grpcurl --plaintext -d '{"book_id": "1667832878734", "payload": {"title": "Lord of The Ring 29", "uploader": {"user": "steven"}, "editors": [{"user_id": "721872389238", "user": "mark"}]}}' localhost:5014 BookService.Update
+	grpcurl --plaintext -d '{"book_id": "1667832878734", "payload": {"title": "Lord of The Ring", "uploader": {"user": "steven"}, "editors": [{"user_id": "721872389238", "user": "mark"}]}}' localhost:5014 BookService.Update
 
 create:
 	grpcurl --plaintext -d '{"title": "Lord of The Ring 4", "uploader": {"user_id": "1987217838723", "user": "steven"}}' localhost:5014 BookService.Create

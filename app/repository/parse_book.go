@@ -8,6 +8,7 @@ import (
 func (b *bookRepo) parseBook(item domain.Book) (res *book.Book) {
 	uploader := &book.BookUploader{
 		UserId: item.Uploader.UserId,
+		User:   item.Uploader.User,
 	}
 
 	res = &book.Book{

@@ -17,7 +17,11 @@ func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (
 
 	searchMatch := helper.GetSerchRegex([]string{
 		"book_id",
+		"title",
 		"author",
+		"publisher",
+		"location_id",
+		"uploader.user_id",
 	}, s)
 
 	filter := bson.M{

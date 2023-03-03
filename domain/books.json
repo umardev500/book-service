@@ -10,7 +10,8 @@
     "description": "The book description",
     "location_id": "16673288374",
     "uploader": {
-      "user_id": "721872389233"
+      "user_id": "721872389233",
+      "user": "seteven"
     },
     "created_at": 1677761478,
     "updated_at": null,

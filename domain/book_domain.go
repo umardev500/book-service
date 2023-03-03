@@ -7,6 +7,7 @@ import (
 
 type BookUploader struct {
 	UserId string `bson:"user_id"`
+	User   string `bson:"user"`
 }
 
 type Book struct {

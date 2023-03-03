@@ -12,11 +12,11 @@ func (b *bookRepo) parseBook(item domain.Book) (res *book.Book) {
 		User:   item.Uploader.User,
 	}
 
-	var editor []*book.BookEditor
-	if item.Editor != nil && len(item.Editor) > 0 {
-		for _, val := range item.Editor {
+	var editors []*book.BookEditor
+	if item.Editors != nil && len(item.Editors) > 0 {
+		for _, val := range item.Editors {
 			foo := book.BookEditor{UserId: val.UserId, User: val.User}
-			editor = append(editor, &foo)
+			editors = append(editors, &foo)
 		}
 	}
 
@@ -31,7 +31,7 @@ func (b *bookRepo) parseBook(item domain.Book) (res *book.Book) {
 		Description: item.Description,
 		LocationId:  item.LocationId,
 		Uploader:    uploader,
-		Editor:      editor,
+		Editors:     editors,
 		CreatedAt:   item.CreatedAt,
 		UpdatedAt:   item.UpdatedAt,
 		DeletedAt:   item.DeletedAt,

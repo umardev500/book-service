@@ -27,7 +27,7 @@ type Book struct {
 	Description string       `bson:"description"`
 	LocationId  string       `bson:"location_id"`
 	Uploader    BookUploader `bson:"uploader"`
-	Editor      []BookEditor `bson:"editor"`
+	Editors     []BookEditor `bson:"editors"`
 	CreatedAt   int64        `bson:"created_at"`
 	UpdatedAt   int64        `bson:"updated_at"`
 	DeletedAt   int64        `bson:"deleted_at"`

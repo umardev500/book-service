@@ -31,5 +31,6 @@ type BookService interface {
 }
 
 type BookRepo interface {
+	// GetBook(ctx context.Context)
 	GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error)
 }

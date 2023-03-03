@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "./book";
+
+import "pb/book/book.proto";
+
+message BookFindOneRequest {
+    string book_id = 1;
+}
+
+message BookFindOneResponse {
+    bool isEmpty = 1;
+    Book payload = 2;
+}

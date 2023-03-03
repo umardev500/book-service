@@ -22,6 +22,7 @@ func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (
 		"publisher",
 		"location_id",
 		"uploader.user_id",
+		"uploader.user",
 	}, s)
 
 	filter := bson.M{

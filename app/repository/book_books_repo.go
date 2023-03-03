@@ -14,6 +14,7 @@ import (
 
 func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error) {
 	s := req.Search
+	isCount := req.Count
 	sort := -1
 	if req.Sort == "asc" {
 		sort = 1
@@ -88,41 +89,57 @@ func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (
 	}
 
 	var books = []*book.Book{}
+	var dataSize int64 = 0
+	res = &book.BookFindAllResponse{Payload: &book.BookFindAll{}}
 
-	for cur.Next(ctx) {
-		each := domain.Book{}
-		err := cur.Decode(&each)
-		if err != nil {
-			return nil, err
+	if !isCount {
+		for cur.Next(ctx) {
+			each := domain.Book{}
+			err := cur.Decode(&each)
+			if err != nil {
+				return nil, err
+			}
+
+			item := b.parseBook(each)
+			books = append(books, item)
 		}
 
-		item := b.parseBook(each)
-		books = append(books, item)
+		res = &book.BookFindAllResponse{Payload: &book.BookFindAll{
+			Books: books,
+		}}
+
+		dataSize = int64(len(books))
+		if dataSize < 1 {
+			res = &book.BookFindAllResponse{
+				IsEmpty: true,
+			}
+
+			return
+		}
+
 	}
 
-	dataSize := int64(len(books))
-	if dataSize < 1 {
-		res = &book.BookFindAllResponse{
-			IsEmpty: true,
+	rows, _ := b.book.CountDocuments(ctx, filter)
+	res.Payload.Rows = rows
+	if isCount {
+		if rows < 1 {
+			res.IsEmpty = true
+			res.Payload = nil
 		}
 
 		return
 	}
 
-	res = &book.BookFindAllResponse{Payload: &book.BookFindAll{
-		Books: books,
-	}}
-
-	rows, _ := b.book.CountDocuments(ctx, filter)
-	res.Payload.Rows = rows
-	var pages int64 = 1
-	if rows >= perPage {
-		pages = int64(math.Ceil(float64(rows) / float64(perPage)))
+	if !isCount {
+		var pages int64 = 1
+		if rows >= perPage {
+			pages = int64(math.Ceil(float64(rows) / float64(perPage)))
+		}
+		res.Payload.Pages = pages
+		res.Payload.PerPage = perPage
+		res.Payload.ActivePage = page
+		res.Payload.Total = dataSize
 	}
-	res.Payload.Pages = pages
-	res.Payload.PerPage = perPage
-	res.Payload.ActivePage = page
-	res.Payload.Total = dataSize
 
 	return
 }

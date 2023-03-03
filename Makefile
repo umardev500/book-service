@@ -10,4 +10,4 @@ clean:
 	find pb -name "*.pb.go" -type f -delete
 
 books:
-	grpcurl --plaintext -d '{"search": "721872389233"}' localhost:5014 BookService.GetBooks
+	grpcurl --plaintext -d '{"search": "721872389233", "status": "willEmpty"}' localhost:5014 BookService.GetBooks

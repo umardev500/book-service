@@ -4,6 +4,7 @@ import (
 	"book/domain"
 	"book/helper"
 	"book/pb/book"
+	"book/variable"
 	"context"
 	"math"
 
@@ -13,7 +14,38 @@ import (
 
 func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error) {
 	s := req.Search
-	// status := req.Status
+	status := req.Status
+	if status == "" {
+		status = "none"
+	}
+
+	// deleted status
+	deleted := bson.M{"deleted_at": bson.M{"$eq": nil}}
+	if status == variable.StatusDeleted {
+		deleted = bson.M{"deleted_at": bson.M{"$ne": nil}}
+	}
+
+	// out of stock status
+	oos := bson.M{}
+	if status == variable.StatusOutOfStock {
+		oos = bson.M{"qty": bson.M{"$lte": 0}}
+	}
+
+	willEmpty := bson.M{}
+	dangerStock := 5
+	if status == variable.WillEmpty {
+		willEmpty = bson.M{"$and": []bson.M{
+			{"qty": bson.M{"$lte": dangerStock}},
+			{"qty": bson.M{"$gt": 0}},
+		}}
+	}
+
+	// additonal filter
+	filterData := []bson.M{
+		deleted,
+		oos,
+		willEmpty,
+	}
 
 	searchMatch := helper.GetSerchRegex([]string{
 		"book_id",
@@ -26,7 +58,8 @@ func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (
 	}, s)
 
 	filter := bson.M{
-		"$or": searchMatch,
+		"$or":  searchMatch,
+		"$and": filterData,
 	}
 
 	findOption := options.Find()

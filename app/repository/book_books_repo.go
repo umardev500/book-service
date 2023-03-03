@@ -14,6 +14,10 @@ import (
 
 func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error) {
 	s := req.Search
+	sort := -1
+	if req.Sort == "asc" {
+		sort = 1
+	}
 	status := req.Status
 	if status == "" {
 		status = "none"
@@ -76,6 +80,7 @@ func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (
 
 	findOption.SetSkip(offset)
 	findOption.SetLimit(perPage)
+	findOption.SetSort(bson.M{"book_id": sort})
 
 	cur, err := b.book.Find(ctx, filter)
 	if err != nil {

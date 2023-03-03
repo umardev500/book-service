@@ -14,7 +14,7 @@ book:
 	grpcurl --plaintext -d '{"book_id": "1667832878734"}' localhost:5014 BookService.GetBook
 
 books:
-	grpcurl --plaintext -d '{"search": "721872389233", "status": "willEmpty"}' localhost:5014 BookService.GetBooks
+	grpcurl --plaintext -d '{"search": "721872389233", "status": "none"}' localhost:5014 BookService.GetBooks
 
 delete:
 	grpcurl --plaintext -d '{"book_id": "1667832878734"}' localhost:5014 BookService.Delete

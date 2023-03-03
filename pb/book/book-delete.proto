@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option go_package = "pb/book";
+
+message BookDeleteRequest {
+    string book_id = 1;
+}

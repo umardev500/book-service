@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "./book";
+option go_package = "pb/book";
 
 message BookUploader {
     string user_id = 1;

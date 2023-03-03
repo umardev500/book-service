@@ -14,11 +14,11 @@ func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res
 	isAffected := false
 	filter := bson.M{"book_id": req.BookId}
 
-	uploaderPayload := bson.D{}
+	var uploaderPayload bson.D
 	if req.Payload.Uploader != nil {
 		uploaderPayload = bson.D{
-			{Key: "uploader.user_id", Value: req.Payload.Uploader.UserId},
-			{Key: "uploader.user", Value: req.Payload.Uploader.User},
+			{Key: "user_ids", Value: req.Payload.Uploader.UserId},
+			{Key: "user", Value: req.Payload.Uploader.User},
 		}
 
 		helper.NoEmpty(uploaderPayload, &uploaderPayload)
@@ -33,6 +33,7 @@ func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res
 		{Key: "cover", Value: req.Payload.Cover},
 		{Key: "description", Value: req.Payload.Description},
 		{Key: "location_id", Value: req.Payload.LocationId},
+		{Key: "uploader", Value: uploaderPayload},
 	}
 
 	helper.NoEmpty(bookPayload, &bookPayload)
@@ -52,7 +53,6 @@ func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res
 
 	payload := bson.D{}
 	payload = append(payload, bookPayload...)
-	payload = append(payload, uploaderPayload...)
 	payload = append(payload, bson.E{Key: "updated_at", Value: helper.GetTime(nil)})
 
 	// set := bson.M{"$set": editorPaylod}

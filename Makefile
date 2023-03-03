@@ -26,4 +26,4 @@ update:
 	grpcurl --plaintext -d '{"book_id": "1667832878734", "payload": {"title": "Lord of The Ring", "uploader": {"user": "steven"}, "editors": [{"user_id": "721872389238", "user": "mark"}]}}' localhost:5014 BookService.Update
 
 create:
-	grpcurl --plaintext -d '{"title": "Lord of The Ring 4", "uploader": {"user_id": "1987217838723", "user": "steven"}}' localhost:5014 BookService.Create
+	grpcurl --plaintext -d '{"book_id": "1667832878734","title": "Lord of The Ring","author": "J. R. R. Tolkien","publisher": "Allen & Unwin","pages_total": 450,"qty": 40,"cover": "cover.png","description": "The book description","location_id": "16673288374","uploader": {"user_id": "721872389233","user": "seteven"}}' localhost:5014 BookService.Create

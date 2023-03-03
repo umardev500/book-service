@@ -7,6 +7,7 @@ import "pb/book/book-find-all.proto";
 import "pb/book/book-delete.proto";
 import "pb/book/book-update.proto";
 import "pb/book/book-create.proto";
+import "pb/book/book-restore.proto";
 import "pb/response.proto";
 
 service BookService {
@@ -16,4 +17,5 @@ service BookService {
     rpc Delete(BookDeleteRequest) returns (OperationResponse) {}
     rpc SoftDelete(BookDeleteRequest) returns (OperationResponse) {}
     rpc Update(BookUpdateRequest) returns (OperationResponse) {}
+    rpc Restore(BookRestoreRequest) returns (OperationResponse) {}
 }

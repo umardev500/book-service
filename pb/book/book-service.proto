@@ -6,9 +6,11 @@ import "pb/book/book-find-one.proto";
 import "pb/book/book-find-all.proto";
 import "pb/book/book-delete.proto";
 import "pb/book/book-update.proto";
+import "pb/book/book-create.proto";
 import "pb/response.proto";
 
 service BookService {
+    rpc Create(BookCreateRequest) returns (BookCreateResponse) {}
     rpc GetBook(BookFindOneRequest) returns (BookFindOneResponse) {}
     rpc GetBooks(BookFindAllRequest) returns (BookFindAllResponse) {}
     rpc Delete(BookDeleteRequest) returns (OperationResponse) {}

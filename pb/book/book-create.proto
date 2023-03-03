@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "pb/book";
+
+import "pb/book/book-uploader.proto";
+import "pb/book/book-editor.proto";
+
+message BookCreateRequest {
+    string book_id = 1;
+    string title = 2;
+    string author = 3;
+    string publisher = 4;
+    int64 pages_total = 5;
+    int64 qty = 6;
+    string cover = 7;
+    string description = 8;
+    string location_id = 9;
+    BookUploader uploader = 10;
+    repeated BookEditor editors = 11;
+}
+
+message BookCreateResponse {}

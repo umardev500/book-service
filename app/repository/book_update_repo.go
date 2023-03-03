@@ -53,7 +53,7 @@ func (b *bookRepo) Update(ctx context.Context, req *book.BookUpdateRequest) (res
 	payload := bson.D{}
 	payload = append(payload, bookPayload...)
 	payload = append(payload, uploaderPayload...)
-	payload = append(payload, bson.E{Key: "updated_at", Value: helper.GetTime()})
+	payload = append(payload, bson.E{Key: "updated_at", Value: helper.GetTime(nil)})
 
 	// set := bson.M{"$set": editorPaylod}
 	opts := options.Update().SetUpsert(false)

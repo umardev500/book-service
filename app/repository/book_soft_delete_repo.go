@@ -12,7 +12,7 @@ import (
 func (b *bookRepo) SoftDelete(ctx context.Context, req *book.BookDeleteRequest) (res *pb.OperationResponse, err error) {
 	isAffected := false
 	filter := bson.M{"book_id": req.BookId, "deleted_at": bson.M{"$eq": nil}}
-	payload := bson.M{"deleted_at": helper.GetTime()}
+	payload := bson.M{"deleted_at": helper.GetTime(nil)}
 	set := bson.M{"$set": payload}
 	resp, err := b.book.UpdateOne(ctx, filter, set)
 	if err != nil {

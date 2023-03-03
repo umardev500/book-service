@@ -1,8 +1,23 @@
 package helper
 
-import "time"
+import (
+	"book/variable"
+	"time"
+)
 
-func GetTime() (res int64) {
-	res = time.Now().UTC().Unix()
+func GetTime(timeType *string) (res int64) {
+	t := time.Now().UTC()
+
+	switch *timeType {
+	case variable.UnixNano:
+		res = t.UnixNano()
+	case variable.UnixMili:
+		res = t.UnixMilli()
+	case variable.UnixMicro:
+		res = t.UnixMicro()
+	default:
+		res = t.Unix()
+	}
+
 	return
 }

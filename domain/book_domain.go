@@ -27,10 +27,11 @@ type Book struct {
 }
 
 type BookService interface {
+	GetBook(ctx context.Context, req *book.BookFindOneRequest) (res *book.BookFindOneResponse, err error)
 	GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error)
 }
 
 type BookRepo interface {
-	// GetBook(ctx context.Context)
+	GetBook(ctx context.Context, req *book.BookFindOneRequest) (res *book.BookFindOneResponse, err error)
 	GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error)
 }

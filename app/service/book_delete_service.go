@@ -4,12 +4,10 @@ import (
 	"book/pb"
 	"book/pb/book"
 	"context"
-	"fmt"
 )
 
 func (b *bookService) Delete(ctx context.Context, req *book.BookDeleteRequest) (res *pb.OperationResponse, err error) {
 	res, err = b.repo.Delete(ctx, req)
-	fmt.Println(res)
 
 	return
 }

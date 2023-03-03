@@ -11,4 +11,5 @@ service BookService {
     rpc GetBook(BookFindOneRequest) returns (BookFindOneResponse) {}
     rpc GetBooks(BookFindAllRequest) returns (BookFindAllResponse) {}
     rpc Delete(BookDeleteRequest) returns (OperationResponse) {}
+    rpc SoftDelete(BookDeleteRequest) returns (OperationResponse) {}
 }

@@ -31,10 +31,12 @@ type BookService interface {
 	GetBook(ctx context.Context, req *book.BookFindOneRequest) (res *book.BookFindOneResponse, err error)
 	GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error)
 	Delete(ctx context.Context, req *book.BookDeleteRequest) (res *pb.OperationResponse, err error)
+	SoftDelete(ctx context.Context, req *book.BookDeleteRequest) (res *pb.OperationResponse, err error)
 }
 
 type BookRepo interface {
 	GetBook(ctx context.Context, req *book.BookFindOneRequest) (res *book.BookFindOneResponse, err error)
 	GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error)
 	Delete(ctx context.Context, req *book.BookDeleteRequest) (res *pb.OperationResponse, err error)
+	SoftDelete(ctx context.Context, req *book.BookDeleteRequest) (res *pb.OperationResponse, err error)
 }

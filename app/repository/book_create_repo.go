@@ -20,8 +20,9 @@ func (b *bookRepo) Create(ctx context.Context, req *book.BookCreateRequest) (res
 		helper.NoEmpty(uploaderPayload, &uploaderPayload)
 	}
 
+	bookId := helper.ToString(int(helper.GetTime(&variable.UnixNano)))
 	bookPayload := bson.D{
-		{Key: "book_id", Value: helper.GetTime(&variable.UnixNano)},
+		{Key: "book_id", Value: bookId},
 		{Key: "title", Value: req.Title},
 		{Key: "author", Value: req.Author},
 		{Key: "publisher", Value: req.Publisher},

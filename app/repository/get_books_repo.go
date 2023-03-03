@@ -2,29 +2,26 @@ package repository
 
 import (
 	"book/domain"
+	"book/helper"
 	"book/pb/book"
 	"context"
 	"math"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (b *bookRepo) GetBooks(ctx context.Context, req *book.BookFindAllRequest) (res *book.BookFindAllResponse, err error) {
 	s := req.Search
 	// status := req.Status
+
+	searchMatch := helper.GetSerchRegex([]string{
+		"book_id",
+		"author",
+	}, s)
+
 	filter := bson.M{
-		"$or": []bson.M{
-			{
-				"book_id": bson.M{
-					"$regex": primitive.Regex{
-						Pattern: s,
-						Options: "i",
-					},
-				},
-			},
-		},
+		"$or": searchMatch,
 	}
 
 	findOption := options.Find()

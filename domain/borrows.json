@@ -1,0 +1,27 @@
+[{
+    "borrow_id": "166788928792",
+    "borrower": {
+        "user_id": "16672828723",
+        "user": "steven",
+        "name": "Steven Hawking"
+    },
+    "books": [{
+        "book_id": "1667832878734",
+        "title": "Lord of The Ring",
+        "status": "borrowed",
+        "returned_at": null
+    }],
+    "staff": {
+        "user_id": "721872389233",
+        "user": "ahmad",
+        "name": "Ahmad Rifa'i"
+    }, 
+    "qty": 1,
+    "status": "accepted",
+    "fine": 5000,
+    "duration": 30,
+    "created_at": 1677649865,
+    "return_time": 1677768678,
+    "accepted_at": 1677761478,
+    "last_returned_at": null
+}]

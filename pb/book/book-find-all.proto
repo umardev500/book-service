@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "./book";
+
+import "pb/book/book.proto";
+
+message BookFindAll {
+    repeated Book books = 1;
+    int64 rows = 2;
+    int64 pages = 3;
+    int64 per_page = 4;
+    int64 active_page = 5;
+    int64 total = 6;
+}
+
+message BookFindAllResponse {
+    bool is_empty = 1;
+    BookFindAll payload = 2;
+}
+
+message BookFindAllRequest {
+    string sort = 1;
+    int64 page = 2;
+    int64 per_page = 3;
+    string search = 4;
+    string status = 5;
+    bool count = 6;
+}

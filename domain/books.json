@@ -1,0 +1,19 @@
+[
+  {
+    "book_id": "1667832878734",
+    "title": "Lord of The Ring",
+    "author": "J. R. R. Tolkien",
+    "publisher": "Allen & Unwin",
+    "pages_total": 450,
+    "qty": 40,
+    "cover": "cover.png",
+    "description": "The book description",
+    "location_id": "16673288374",
+    "uploader": {
+      "user_id": "721872389233"
+    },
+    "created_at": 1677761478,
+    "updated_at": null,
+    "deleted_at": null
+  }
+]

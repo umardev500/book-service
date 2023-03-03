@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "./book";
+
+import "pb/book/book-find-all.proto";
+
+service BookService {
+    rpc GetBooks(BookFindAllRequest) returns (BookFindAllResponse) {}
+}
